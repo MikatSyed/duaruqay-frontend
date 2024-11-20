@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
 
 <div className="flex space-x-6 mx-5">
   {/* Category Card Section */}
-  <div className="flex-shrink-0 ">
+  <div className="flex-shrink-0  max-h-[550px] overflow-y-auto custom-scrollbar">
     <CategoryCard />
   </div>
 
