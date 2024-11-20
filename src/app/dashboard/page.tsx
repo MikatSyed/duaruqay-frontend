@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import CategoryCard from "../../components/CategoryCard";
 import SettingsPanel from "../../components/SettingsPanel";
 import ContentCard from "@/components/ContentCard";
+import Setting from "@/components/Setting";
 
 // Define categories as a sample data structure with unique IDs
 const cardsData = [
@@ -51,25 +52,33 @@ const Dashboard: React.FC = () => {
           toggleSettings={() => setSettingsOpen(!isSettingsOpen)}
         />
 
-<div className="  flex space-x-6 mx-5 ">
-    
-      <div>
-        <CategoryCard />
-      </div>
+<div className="flex space-x-6 mx-5">
+  {/* Category Card Section */}
+  <div className="flex-shrink-0 ">
+    <CategoryCard />
+  </div>
 
-      <div className=" max-h-[550px] overflow-y-auto custom-scrollbar">
-      {cardsData.map((card, index) => (
-        <ContentCard
-          key={index}
-          title={card.title}
-          arabic={card.arabic}
-          transliteration={card.transliteration}
-          translation={card.translation}
-          hadithReference={card.hadithReference}
-        />
-      ))}
-      </div>
-    </div>
+  {/* Cards Section */}
+  <div className="flex-grow flex flex-col  max-h-[550px] overflow-y-auto custom-scrollbar">
+    {cardsData.map((card, index) => (
+      <ContentCard
+        key={index}
+        title={card.title}
+        arabic={card.arabic}
+        transliteration={card.transliteration}
+        translation={card.translation}
+        hadithReference={card.hadithReference}
+      />
+    ))}
+  </div>
+
+  {/* Settings Panel Section */}
+  <div className="flex-shrink-0 settings-container">
+    <Setting />
+  </div>
+</div>
+
+
       </div>
 
       {/* Settings Panel */}
