@@ -12,7 +12,7 @@ const CategoryCard = () => {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState<number | null>(null);
   const [activeSubcategoryIndex, setActiveSubcategoryIndex] = useState<number | null>(null);
   const [activeSubSubcategoryIndex, setActiveSubSubcategoryIndex] = useState<number | null>(null);
-  const router = useRouter()
+  const router = useRouter();
 
   // Fetch categories data
   useEffect(() => {
@@ -62,23 +62,29 @@ const CategoryCard = () => {
     setActiveCategoryIndex(activeCategoryIndex === index ? null : index);
     setActiveSubcategoryIndex(null); // Reset subcategory index
     setActiveSubSubcategoryIndex(null); // Reset sub-subcategory index
+  
     const searchParams = new URLSearchParams(window.location.search);
-
+  
+    // Remove the `subcat` and `dua` query parameters when changing the `cat` parameter
+    searchParams.delete("subcat");
+    searchParams.delete("dua");
+  
     // Set or update the `cat` query parameter
     searchParams.set("cat", categoryId.toString());
-
+  
     // Update the browser's URL without triggering a page reload
     window.history.replaceState(
-      null, 
-      "", 
+      null,
+      "",
       `${window.location.pathname}?${searchParams.toString()}`
     );
+  
     if (activeCategoryIndex !== index) {
       // Check if subcategories are already loaded
       const subcategories = categories[index].subcategories
         ? categories[index].subcategories
         : await fetchSubcategories(categoryId);
-
+  
       setCategories((prevCategories) => {
         const newCategories = [...prevCategories];
         newCategories[index].subcategories = subcategories;
@@ -86,30 +92,69 @@ const CategoryCard = () => {
       });
     }
   };
+  
 
   // Handle subcategory click
   const handleSubcategoryClick = async (index: number, subcategoryId: number) => {
+    // Toggle the active subcategory index
     setActiveSubcategoryIndex(activeSubcategoryIndex === index ? null : index);
     setActiveSubSubcategoryIndex(null); // Reset sub-subcategory index
-
-    const currentCategory = categories[activeCategoryIndex!];
-    const existingDuas = currentCategory.subcategories[index].duas;
-
+  
+    const currentCategory = categories[activeCategoryIndex!]; // Get the current category
+    const existingDuas = currentCategory.subcategories[index].duas; // Check if duas are already loaded for this subcategory
+  
+    const searchParams = new URLSearchParams(window.location.search); // Get the current URL's query parameters
+  
+    // Remove the `dua` query parameter when changing the `subcat`
+    searchParams.delete("dua");
+  
+    // Set or update the `cat` and `subcat` query parameters
+    searchParams.set("cat", currentCategory.cat_id.toString());
+    searchParams.set("subcat", subcategoryId.toString());
+  
+    // Update the browser's URL without triggering a page reload
+    window.history.replaceState(
+      null, // No state object
+      "",  // No title
+      `${window.location.pathname}?${searchParams.toString()}` // Updated URL
+    );
+  
+    // Check if the duas for this subcategory are already loaded, if not, fetch them
     if (!existingDuas) {
       const duas = await fetchDuas(currentCategory.cat_id, subcategoryId);
       setCategories((prevCategories) => {
         const newCategories = [...prevCategories];
-        newCategories[activeCategoryIndex!].subcategories[index].duas = duas;
+        newCategories[activeCategoryIndex!].subcategories[index].duas = duas; // Update the subcategory's duas
         return newCategories;
       });
     }
   };
+  
+
 
   // Handle sub-subcategory click
-  const handleSubSubcategoryClick = (index: number) => {
+  const handleSubSubcategoryClick = (index: number, duaId: number) => {
     setActiveSubSubcategoryIndex(activeSubSubcategoryIndex === index ? null : index);
+  
+    // Update the URL to include cat, subcat, and dua
+    const currentCategory = categories[activeCategoryIndex!];
+    const currentSubcategory = currentCategory.subcategories[activeSubcategoryIndex!];
+  
+    const searchParams = new URLSearchParams(window.location.search);
+  
+    // Set or update the `cat`, `subcat`, and `dua` query parameters
+    searchParams.set("cat", currentCategory.cat_id.toString());
+    searchParams.set("subcat", currentSubcategory.subcat_id.toString());
+    searchParams.set("dua", duaId.toString());
+  
+    // Update the browser's URL without triggering a page reload
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}?${searchParams.toString()}`
+    );
   };
-
+  
   // Handle search input change
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -192,7 +237,7 @@ const CategoryCard = () => {
                                 className={`flex items-center cursor-pointer ${
                                   activeSubSubcategoryIndex === subSubIndex ? "text-[#1fa45b]" : "text-gray-600"
                                 }`}
-                                onClick={() => handleSubSubcategoryClick(subSubIndex)}
+                                onClick={() => handleSubSubcategoryClick(subSubIndex, dua.dua_id)}
                               >
                                 <img
                                   src="/assets/icon/duaarrow.svg"

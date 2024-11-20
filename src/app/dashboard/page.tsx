@@ -17,6 +17,8 @@ const Dashboard: React.FC = () => {
   // Extract category ID from URL query parameters, default to 1
   const searchParams = useSearchParams();
   const categoryId = searchParams.get("cat") || "1";
+  const subCategoryId = searchParams.get("subcat") ;
+  const duaId = searchParams.get("dua") ;
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
@@ -42,7 +44,7 @@ const Dashboard: React.FC = () => {
           {/* Cards Section */}
           <div className="flex-grow flex flex-col max-h-[550px] overflow-y-auto custom-scrollbar">
             {/* Pass categoryId to ContentCard */}
-            <ContentCard categoryId={categoryId} />
+            <ContentCard categoryId={categoryId} subCategoryId={subCategoryId} duaId={duaId}/>
           </div>
 
           {/* Settings Panel Section */}

@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-const ContentCard = ({ categoryId }: { categoryId: any }) => {
+const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
   const [cardsData, setCardsData] = useState([]);
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(true);
+  console.log(duaId,'7')
+
+  // Ref to store references to each card
+  const cardRefs = useRef<any[]>([]);
 
   useEffect(() => {
     // Fetch data for the given category ID
@@ -29,6 +33,45 @@ const ContentCard = ({ categoryId }: { categoryId: any }) => {
     fetchData();
   }, [categoryId]);
 
+  // Scroll to specific card based on subCategoryId or duaId
+  useEffect(() => {
+    if (cardsData.length > 0) {
+      // Scroll based on subCategoryId
+      const parsedSubCategoryId = parseInt(subCategoryId);
+      if (parsedSubCategoryId && cardRefs.current[parsedSubCategoryId]) {
+        console.log("Scrolling to subCategoryId:", parsedSubCategoryId);
+        cardRefs.current[parsedSubCategoryId].scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+  
+      // Scroll based on duaId
+      if (duaId) {
+        const parsedDuaId = parseInt(duaId); // Ensure duaId is parsed as integer
+        console.log("Looking for duaId:", parsedDuaId);
+  
+        // Find the card with the matching duaId in cardsData
+        const duaIndex = cardsData.findIndex((card: any) => card.dua_id === parsedDuaId);
+        console.log("Found duaIndex:", duaIndex);
+  
+        // If a matching dua is found, scroll to it
+        if (duaIndex !== -1 && cardRefs.current[duaIndex]) {
+          console.log("Scrolling to card with duaId:", parsedDuaId);
+          cardRefs.current[duaIndex].scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        } else {
+          console.log("Card not found for duaId:", parsedDuaId);
+        }
+      }
+    }
+  }, [subCategoryId, duaId, cardsData]);
+  
+
+  
+
   const handleCopy = (card: any) => {
     const content = `${card.dua_name_en}\n\n${card.dua_arabic}\n\nTransliteration: ${card.transliteration_en}\n\nTranslation: ${card.top_en}\n\nReference: ${card.refference_en}`;
     navigator.clipboard.writeText(content);
@@ -46,9 +89,10 @@ const ContentCard = ({ categoryId }: { categoryId: any }) => {
 
   return (
     <>
-      {cardsData.map((card: any) => (
+      {cardsData.map((card: any, index: number) => (
         <div
-          key={card.id}
+          key={index}
+          ref={(el: any) => (cardRefs.current[index] = el)} // Add ref to each card
           className="p-6 bg-white rounded-lg mb-6 shadow-md"
         >
           {/* Title */}
