@@ -1,24 +1,28 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 
 const CategoryCard = () => {
-  // States for categories, active category, subcategory, and dua indices
   const [categories, setCategories] = useState<any[]>([]);
+  const [filteredCategories, setFilteredCategories] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [activeCategoryIndex, setActiveCategoryIndex] = useState<number | null>(null);
   const [activeSubcategoryIndex, setActiveSubcategoryIndex] = useState<number | null>(null);
   const [activeSubSubcategoryIndex, setActiveSubSubcategoryIndex] = useState<number | null>(null);
+  const router = useRouter()
 
   // Fetch categories data
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/v1/categories"); // Replace with actual API endpoint
+        const response = await fetch("http://localhost:5000/api/v1/categories");
         const data = await response.json();
         if (data.success) {
-          setCategories(data.data); // Set categories from API response
+          setCategories(data.data);
+          setFilteredCategories(data.data);
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -30,7 +34,7 @@ const CategoryCard = () => {
   // Fetch subcategories for a specific category
   const fetchSubcategories = async (categoryId: number) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/categories/subcategories/${categoryId}`);
+      const response = await fetch(`http://localhost:5000/api/v1/categories/${categoryId}/subcategories`);
       const data = await response.json();
       return data.success ? data.data : [];
     } catch (error) {
@@ -40,9 +44,11 @@ const CategoryCard = () => {
   };
 
   // Fetch duas for a specific subcategory
-  const fetchDuas = async (subcategoryId: number) => {
+  const fetchDuas = async (categoryId: number, subcategoryId: number) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/categories/subcategories/duas/${subcategoryId}`);
+      const response = await fetch(
+        `http://localhost:5000/api/v1/categories/subcategories/duas?cat=${categoryId}&subcat=${subcategoryId}`
+      );
       const data = await response.json();
       return data.success ? data.data : [];
     } catch (error) {
@@ -53,16 +59,26 @@ const CategoryCard = () => {
 
   // Handle category click
   const handleCategoryClick = async (index: number, categoryId: number) => {
-    // Toggle active category
     setActiveCategoryIndex(activeCategoryIndex === index ? null : index);
+    setActiveSubcategoryIndex(null); // Reset subcategory index
+    setActiveSubSubcategoryIndex(null); // Reset sub-subcategory index
+    const searchParams = new URLSearchParams(window.location.search);
 
-    // Reset subcategory and dua selection
-    setActiveSubcategoryIndex(null);
-    setActiveSubSubcategoryIndex(null);
+    // Set or update the `cat` query parameter
+    searchParams.set("cat", categoryId.toString());
 
-    // Fetch and set subcategories for the selected category
+    // Update the browser's URL without triggering a page reload
+    window.history.replaceState(
+      null, 
+      "", 
+      `${window.location.pathname}?${searchParams.toString()}`
+    );
     if (activeCategoryIndex !== index) {
-      const subcategories = await fetchSubcategories(categoryId);
+      // Check if subcategories are already loaded
+      const subcategories = categories[index].subcategories
+        ? categories[index].subcategories
+        : await fetchSubcategories(categoryId);
+
       setCategories((prevCategories) => {
         const newCategories = [...prevCategories];
         newCategories[index].subcategories = subcategories;
@@ -73,22 +89,34 @@ const CategoryCard = () => {
 
   // Handle subcategory click
   const handleSubcategoryClick = async (index: number, subcategoryId: number) => {
-    // Toggle active subcategory
     setActiveSubcategoryIndex(activeSubcategoryIndex === index ? null : index);
-    setActiveSubSubcategoryIndex(null); // Reset sub-subcategory
+    setActiveSubSubcategoryIndex(null); // Reset sub-subcategory index
 
-    // Fetch and set duas for the selected subcategory
-    const duas = await fetchDuas(subcategoryId);
-    setCategories((prevCategories) => {
-      const newCategories = [...prevCategories];
-      newCategories[activeCategoryIndex!].subcategories[index].duas = duas;
-      return newCategories;
-    });
+    const currentCategory = categories[activeCategoryIndex!];
+    const existingDuas = currentCategory.subcategories[index].duas;
+
+    if (!existingDuas) {
+      const duas = await fetchDuas(currentCategory.cat_id, subcategoryId);
+      setCategories((prevCategories) => {
+        const newCategories = [...prevCategories];
+        newCategories[activeCategoryIndex!].subcategories[index].duas = duas;
+        return newCategories;
+      });
+    }
   };
 
   // Handle sub-subcategory click
   const handleSubSubcategoryClick = (index: number) => {
     setActiveSubSubcategoryIndex(activeSubSubcategoryIndex === index ? null : index);
+  };
+
+  // Handle search input change
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+    const filtered = categories.filter((category) =>
+      category.cat_name_en.toLowerCase().includes(event.target.value.toLowerCase())
+    );
+    setFilteredCategories(filtered);
   };
 
   return (
@@ -104,6 +132,8 @@ const CategoryCard = () => {
           </span>
           <input
             type="text"
+            value={searchTerm}
+            onChange={handleSearchChange}
             placeholder="Search Categories..."
             className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-1 focus:ring-[#1fa45b] focus:border-[#1fa45b]"
           />
@@ -111,7 +141,7 @@ const CategoryCard = () => {
       </div>
 
       <div className="space-y-2 px-4">
-        {categories.map((category, index) => (
+        {filteredCategories.map((category, index) => (
           <div key={category.cat_id}>
             <div
               className={`hover:bg-gray-200 flex flex-row gap-x-4 items-center w-full h-18 rounded-xl transition-all duration-200 ease-in-out px-3 ${
