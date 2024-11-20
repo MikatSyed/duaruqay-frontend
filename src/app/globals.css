@@ -2,39 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
-/* For Webkit Browsers (Chrome, Edge, Safari) */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 10px; /* Width of the vertical scrollbar */
-  height: 10px; /* Height of the horizontal scrollbar */
+  width: 10px;
+  height: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #f0f0f0; /* Background color of the scrollbar track */
+  background: #f0f0f0;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
- 
-  border-radius: 5px; /* Rounded edges for the thumb */
+  border-radius: 5px;
 }
 
-/* For Firefox */
 .custom-scrollbar {
-  scrollbar-width: thin; /* Set a thinner scrollbar */
- 
+  scrollbar-width: thin;
 }
 
-/* Hide the sidebar by default */
 .settings-container {
   display: none;
 }
 
-/* Show the settings container for screens with a minimum width of 1640px */
 @media (min-width: 1640px) {
   .settings-container {
     display: block;
     position: fixed;
-    top: 0; /* Ensures it aligns at the top of the viewport */
-    right: 0; /* Sticks to the right */
+    top: 0;
+    right: 0;
   }
 }
 
+input[type="range"] {
+  width: 120px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #d3d3d3;
+  border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px;
+  background: #31ab69;
+  border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #31ab69;
+  border: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 8px;
+  background: #31ab69;
+  border-radius: 5px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #31ab69;
+  border: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-ms-track {
+  height: 8px;
+  background: #31ab69;
+  border-radius: 5px;
+  border-color: transparent;
+  border-width: 8px 0;
+}
+
+input[type="range"]::-ms-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #31ab69;
+  border: none;
+  cursor: pointer;
+}

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
+import AudioPlayer from "./AudioPlayer";
 
 const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
   const [cardsData, setCardsData] = useState([]);
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(true);
-  console.log(duaId,'7')
-
+  
+  
   // Ref to store references to each card
   const cardRefs = useRef<any[]>([]);
 
@@ -129,12 +130,13 @@ const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
           {/* Action Buttons */}
           <div className="flex items-center justify-between mt-5">
             {/* Audio Controls */}
-            <div className="flex items-center space-x-2">
+            {/* <div className="flex items-center space-x-2">
               <button className="text-white rounded-md" title="AudioBtn">
                 <img src="/assets/icon/audiobtn.svg" alt="Audio Button" className="h-14 w-14" />
               </button>
-              <input type="range" min="0" max="100" className="w-[20px]" />
-            </div>
+              <input type="range" min="0" max="100" className="w-[20px] value={}" />
+            </div> */}
+            <AudioPlayer audioSrc={card.audio} />
 
             {/* Copy, Bookmark, Share, and Report Buttons */}
             <div className="flex space-x-4">
