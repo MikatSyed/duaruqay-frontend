@@ -3,6 +3,7 @@ import AudioPlayer from "./AudioPlayer";
 import Setting from "./Setting";
 import SkeletonDuaCard from "./SkeletonDuaCard";
 
+
 const DuaCard = ({ categoryId, subCategoryId, duaId }: any) => {
   const [cardsData, setCardsData] = useState([]);
   const [copied, setCopied] = useState(false);
@@ -99,6 +100,8 @@ const DuaCard = ({ categoryId, subCategoryId, duaId }: any) => {
           ref={(el: any) => (cardRefs.current[index] = el)} 
          
         >
+         
+
           {card?.subcat_name_en &&  <div className="rounded-lg bg-white mb-4 p-4">
         <p className="text-gray-800 font-medium "> <span className="text-[#31ab69]">Section:</span> {card.subcat_name_en}</p>
         </div> }

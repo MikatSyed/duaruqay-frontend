@@ -38,6 +38,17 @@
   }
 }
 
+@media (max-width: 1139px) {
+  .categories-main{
+   display: none;
+  }
+}
+@media (min-width: 1139px) {
+  .categories{
+   display: none;
+  }
+}
+
 @media (max-width: 1279px) {
   .sidebar{
    display: none;
@@ -53,6 +64,33 @@
   }
   .bottom-sidebar{
     display: none;
+  }
+}
+
+/* Default layout (mobile-first, block layout for screens <= 1139px) */
+.main {
+  display: block;
+  width: 100%;
+}
+
+.category-card, .dua-card {
+  margin-bottom: 20px; /* Adds space between cards */
+}
+
+/* For screens larger than 1139px, use flex layout */
+@media (min-width: 1140px) {
+  .main {
+    display: flex;
+    flex-direction: row;  /* Arrange items side by side */
+    gap: 24px;  /* Add space between the cards */
+  }
+  
+  .category-card {
+    flex-shrink: 0; /* Prevents category card from shrinking */
+  }
+
+  .dua-card {
+    flex-grow: 1;  /* Makes Dua card take available space */
   }
 }
 
@@ -113,3 +151,4 @@ input[type="range"]::-ms-thumb {
   border: none;
   cursor: pointer;
 }
+

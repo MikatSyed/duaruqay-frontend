@@ -33,19 +33,22 @@ const Dashboard: React.FC = () => {
           toggleSettings={() => setSettingsOpen(!isSettingsOpen)}
         />
 
-        <div className="flex space-x-6 mx-5">
-          <div className="flex-shrink-0 max-h-[750px] overflow-y-auto custom-scrollbar  rounded-lg ">
-            <CategoryCard />
-          </div>
+<div className="main mx-4">
+  {/* Category Card */}
+  <div className="category-card flex-shrink-0 max-h-[750px] overflow-y-auto custom-scrollbar rounded-lg">
+    <CategoryCard />
+  </div>
 
-          <div className="flex-grow flex flex-col max-h-[750px] overflow-y-auto custom-scrollbar">
-            <DuaCard
-              categoryId={categoryId}
-              subCategoryId={subCategoryId}
-              duaId={duaId}
-            />
-          </div>
-        </div>
+  {/* Dua Card */}
+  <div className="dua-card flex-grow flex flex-col max-h-[750px] overflow-y-auto custom-scrollbar">
+    <DuaCard
+      categoryId={categoryId}
+      subCategoryId={subCategoryId}
+      duaId={duaId}
+    />
+  </div>
+</div>
+
         <div className="bottom-sidebar shadow-md">
           <BottomSidebar />
         </div>

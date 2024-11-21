@@ -10,7 +10,7 @@ const BottomSidebar: React.FC = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 w-full z-50 bg-white shadow-xl border-t rounded-t-[60px]">
+    <div className="fixed bottom-0 left-0 w-full z-10 bg-white shadow-xl border-t rounded-t-[60px]">
     <div className="flex justify-around items-center py-6">
       {navItems.map((item, index) => (
         <div
