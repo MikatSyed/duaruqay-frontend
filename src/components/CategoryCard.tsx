@@ -4,11 +4,13 @@ import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
+import SkeletonCategories from "./SkeletonCategories";
 
 const CategoryCard = () => {
   const [categories, setCategories] = useState<any[]>([]);
   const [filteredCategories, setFilteredCategories] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState<number | null>(null);
   const [activeSubcategoryIndex, setActiveSubcategoryIndex] = useState<number | null>(null);
   const [activeSubSubcategoryIndex, setActiveSubSubcategoryIndex] = useState<number | null>(null);
@@ -18,6 +20,7 @@ const CategoryCard = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        setLoading(true); // Start loading
         const response = await fetch("http://localhost:5000/api/v1/categories");
         const data = await response.json();
         if (data.success) {
@@ -26,6 +29,8 @@ const CategoryCard = () => {
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
+      }finally {
+        setLoading(false); // End loading
       }
     };
     fetchCategories();
@@ -164,8 +169,12 @@ const CategoryCard = () => {
     setFilteredCategories(filtered);
   };
 
+  if (loading) {
+    return <SkeletonCategories />;
+  }
+
   return (
-    <div className="bg-white w-[350px] rounded-lg shadow-md">
+    <div className="bg-white w-[350px]">
       <div className="bg-[#1fa45b] py-3 text-white text-center rounded-t-lg">
         <h1 className="text-lg font-normal">Categories</h1>
       </div>

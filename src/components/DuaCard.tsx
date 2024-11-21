@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import AudioPlayer from "./AudioPlayer";
 import Setting from "./Setting";
+import SkeletonDuaCard from "./SkeletonDuaCard";
 
-const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
+const DuaCard = ({ categoryId, subCategoryId, duaId }: any) => {
   const [cardsData, setCardsData] = useState([]);
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -82,7 +83,7 @@ const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
   };
 
   if (loading) {
-    return <p className="text-gray-500 text-center mt-10">Loading duas...</p>;
+    return <SkeletonDuaCard/>
   }
 
   if (cardsData.length === 0) {
@@ -91,19 +92,26 @@ const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
 
   return (
     <div className="flex w-[100%]">
-     <div className="content"> {cardsData.map((card: any, index: number) => (
+     <div className="content">
+       {cardsData.map((card: any, index: number) => (
         <div
           key={index}
-          ref={(el: any) => (cardRefs.current[index] = el)} // Add ref to each card
-          className="p-6 bg-white rounded-lg mb-6 shadow-md"
+          ref={(el: any) => (cardRefs.current[index] = el)} 
+         
         >
-          {/* Title */}
-          <div className="flex flex-row justify-start items-center">
+          {card?.subcat_name_en &&  <div className="rounded-lg bg-white mb-4 p-4">
+        <p className="text-gray-800 font-medium "> <span className="text-[#31ab69]">Section:</span> {card.subcat_name_en}</p>
+        </div> }
+       
+
+
+        <div  className="p-6 bg-white rounded-lg mb-6 shadow-md">
+        <div className="flex flex-row justify-start items-center">
             <img src="/assets/icon/duacard.svg" alt="duacard" className="mr-3" />
-            <p className="text-[#31ab69] font-medium">{card.dua_name_en}</p>
+            <p className="text-[#31ab69] font-medium">{index + 1 }. {card.dua_name_en}</p>
           </div>
 
-          {/* Arabic Text */}
+       
           <p
             dir="rtl"
             className="my-8 text-right leading-loose text-3xl"
@@ -112,36 +120,30 @@ const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
             {card.dua_arabic}
           </p>
 
-          {/* Transliteration */}
+         
           <p className="my-5 text-justify leading-8 italic" style={{ fontSize: "18px" }}>
             <span className="font-medium">Transliteration:</span> {card.transliteration_en}
           </p>
 
-          {/* Translation */}
+         
           <p className="my-5 text-title text-justify font-normal" style={{ fontSize: "18px" }}>
             <span className="font-medium">Translation:</span> {card.top_en}
           </p>
 
-          {/* Reference */}
+         
           <p className="mt-5 font-semibold text-[#31ab69] text-[18px]">Reference:</p>
           <div className="mt-1 font-normal text-[18px]">
             <span>{card.refference_en}</span>
           </div>
 
-          {/* Action Buttons */}
+       
           <div className="flex items-center justify-between mt-5">
-            {/* Audio Controls */}
-            {/* <div className="flex items-center space-x-2">
-              <button className="text-white rounded-md" title="AudioBtn">
-                <img src="/assets/icon/audiobtn.svg" alt="Audio Button" className="h-14 w-14" />
-              </button>
-              <input type="range" min="0" max="100" className="w-[20px] value={}" />
-            </div> */}
+           
             <AudioPlayer audioSrc={card.audio} />
 
-            {/* Copy, Bookmark, Share, and Report Buttons */}
+           
             <div className="flex space-x-4">
-              {/* Copy Button */}
+             
               <button
                 onClick={() => handleCopy(card)}
                 className="p-2 text-white rounded-md"
@@ -154,22 +156,22 @@ const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
                 />
               </button>
 
-              {/* Bookmark */}
+           
               <button className="p-2 text-white rounded-md" title="Bookmark">
                 <img src="/assets/icon/bookmark.svg" alt="Bookmark" className="h-6 w-6" />
               </button>
 
-              {/* Share */}
+             
               <button className="p-2 text-white rounded-md" title="Share">
                 <img src="/assets/icon/share.svg" alt="Share" className="h-6 w-6" />
               </button>
 
-              {/* Report */}
               <button className="p-2 text-white rounded-md" title="Report">
                 <img src="/assets/icon/report.svg" alt="Report" className="h-5 w-5" />
               </button>
             </div>
           </div>
+        </div>
         </div>
       ))}</div>
       <div className="w-[20%] settings-container"><Setting/></div>
@@ -177,4 +179,4 @@ const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
   );
 };
 
-export default ContentCard;
+export default DuaCard;

@@ -20,7 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div
-      className={` max-h-[900px] h-[600px] m-6 fixed top-0 left-0 h-full bg-white rounded-3xl text-white transition-transform ${
+      className={` max-h-[900px] m-6 fixed top-0 left-0 h-full bg-white rounded-3xl text-white transition-transform ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       } md:translate-x-0 w-64 md:w-[100px] overflow-y-auto  custom-scrollbar`}
     >
