@@ -32,14 +32,15 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, toggleSettings }) => {
   };
 
   return (
-    <div className="flex justify-between items-center p-4 max-w-[2400px]">
-      <button className="text-gray-600 md:hidden" onClick={toggleSidebar}>
-        <FaBars size={20} />
-      </button>
-      <h1 className="text-2xl font-semibold my-4">Duas Page</h1>
-      <div className="flex items-center space-x-4">
+    <div className="flex justify-between items-center p-4 max-w-[2400px] header">
+       <div className="flex items-center header-img ">
+     <img src="/assets/icon/dua-logo.svg" alt="Icon" className="w-12 h-12 mr-3 hidden md:block" />
+     <h1 className="text-2xl font-semibold my-4">Duas Page</h1>
+     </div>
+     <h1 className="text-2xl font-semibold my-4 header-title">Duas Page</h1>
+      <div className="flex items-center">
         
-        <div className="relative  mr-20">
+        <div className="relative  mr-16 hidden md:block">
           <input
             type="text"
             placeholder="Search By Dua Name"
@@ -51,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, toggleSettings }) => {
         </div>
 
        
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative hidden md:block" ref={dropdownRef}>
           <div
             className="flex items-center cursor-pointer space-x-2"
             onClick={toggleDropdown}

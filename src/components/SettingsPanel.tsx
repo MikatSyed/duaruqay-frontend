@@ -33,7 +33,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, toggleSettings })
       ></div>
 
       <div
-        className={`fixed top-0 right-0 h-full bg-white  shadow-lg transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full bg-white z-50 shadow-lg transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } w-full md:w-[340px] rounded-3xl xs:rounded-3xl sm:h-fit md:h-screen lg:h-screen xl:h-screen`}
         ref={panelRef}
