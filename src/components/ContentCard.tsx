@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import AudioPlayer from "./AudioPlayer";
+import Setting from "./Setting";
 
 const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
   const [cardsData, setCardsData] = useState([]);
@@ -89,8 +90,8 @@ const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
   }
 
   return (
-    <>
-      {cardsData.map((card: any, index: number) => (
+    <div className="flex w-[100%]">
+     <div className="content"> {cardsData.map((card: any, index: number) => (
         <div
           key={index}
           ref={(el: any) => (cardRefs.current[index] = el)} // Add ref to each card
@@ -170,8 +171,9 @@ const ContentCard = ({ categoryId, subCategoryId, duaId }: any) => {
             </div>
           </div>
         </div>
-      ))}
-    </>
+      ))}</div>
+      <div className="w-[20%] settings-container"><Setting/></div>
+    </div>
   );
 };
 

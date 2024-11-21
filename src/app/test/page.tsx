@@ -1,10 +1,11 @@
+import BottomNavbar from '@/components/BottomSidebar';
 import Setting from '@/components/Setting';
 import React from 'react';
 
 const page = () => {
     return (
         <div>
-            <Setting/>
+            <BottomNavbar/>
         </div>
     );
 };

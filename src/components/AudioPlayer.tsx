@@ -136,7 +136,14 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc }) => {
           </div>
         </>
       ) : (
-        <p className="text-red-500">Invalid audio source</p>
+        <input
+              type="range"
+              min="0"
+              max={duration}
+              value={currentTime}
+              className="w-full"
+              readOnly
+            />
       )}
     </div>
   );

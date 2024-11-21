@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, toggleSettings }) => {
   };
 
   return (
-    <div className="flex justify-between items-center p-4">
+    <div className="flex justify-between items-center p-4 max-w-[2400px]">
       <button className="text-gray-600 md:hidden" onClick={toggleSidebar}>
         <FaBars size={20} />
       </button>

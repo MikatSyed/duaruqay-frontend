@@ -8,6 +8,7 @@ import SettingsPanel from "../../components/SettingsPanel";
 import ContentCard from "@/components/ContentCard";
 import Setting from "@/components/Setting";
 import { useRouter, useSearchParams } from "next/navigation";
+import BottomSidebar from "@/components/BottomSidebar";
 
 const Dashboard: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -23,13 +24,15 @@ const Dashboard: React.FC = () => {
   return (
     <div className="flex bg-gray-100 min-h-screen">
       {/* Sidebar */}
-      <Sidebar
+     <div className="sidebar">
+     <Sidebar
         isOpen={isSidebarOpen}
         toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
       />
+     </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col ml-32">
+      <div className="flex-1 flex flex-col main-content ">
         <Header
           toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
           toggleSettings={() => setSettingsOpen(!isSettingsOpen)}
@@ -48,11 +51,15 @@ const Dashboard: React.FC = () => {
           </div>
 
           {/* Settings Panel Section */}
-          <div className="flex-shrink-0 settings-container">
+          {/* <div className="flex-shrink-0 settings-container">
             <Setting />
-          </div>
+          </div> */}
         </div>
+       <div className="bottom-sidebar">
+       <BottomSidebar/>
+       </div>
       </div>
+      
 
       {/* Settings Panel */}
       <SettingsPanel
