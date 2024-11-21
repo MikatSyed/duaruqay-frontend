@@ -1,7 +1,7 @@
 import React from "react";
 import Setting from "./Setting";
 
-const SkeletonDuaCard = ({ showSettings = true }: { showSettings?: boolean }) => {
+const SkeletonDuaCard = ({ showSettings = true }) => {
   return (
     <div className="flex w-[100%]">
       {/* Content Skeleton */}

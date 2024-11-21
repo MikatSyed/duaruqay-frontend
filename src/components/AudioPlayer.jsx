@@ -1,17 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 
-interface AudioPlayerProps {
-  audioSrc: string | null;
-}
-
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc }) => {
+const AudioPlayer = ({ audioSrc }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(100);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef(null);
 
-  const extractAudioId = (src: string | null): string | null => {
+  const extractAudioId = (src )  => {
     if (src) {
       const segments = src.split("/");
       const idSegment = segments[segments.length - 1];
@@ -21,7 +17,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc }) => {
     return null;
   };
 
-  let audioId: any = extractAudioId(audioSrc);
+  let audioId = extractAudioId(audioSrc);
   let parsedAudioId = parseInt(audioId);
 
   useEffect(() => {
@@ -71,7 +67,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc }) => {
     }
   };
 
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleVolumeChange = (e) => {
     const newVolume = Number(e.target.value);
     setVolume(newVolume);
     if (audioRef.current) {
@@ -79,7 +75,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc }) => {
     }
   };
 
-  const handleSeekChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSeekChange = (e) => {
     const newTime = Number(e.target.value);
     setCurrentTime(newTime);
     if (audioRef.current) {

@@ -15,14 +15,11 @@ import {
   FaHeart,
 } from "react-icons/fa";
 
-interface HeaderProps {
-  toggleSidebar: () => void;
-  toggleSettings: () => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ toggleSidebar, toggleSettings }) => {
+const Header = ({ toggleSidebar, toggleSettings }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Use ref for the dropdown menu container
+  const dropdownRef = useRef(null);
 
   // Close dropdown when clicking outside using react-use
   useClickAway(dropdownRef, () => setIsDropdownOpen(false));
@@ -33,14 +30,14 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, toggleSettings }) => {
 
   return (
     <div className="flex justify-between items-center p-4 max-w-[2400px] header">
-       <div className="flex items-center header-img ">
-     <img src="/assets/icon/dua-logo.svg" alt="Icon" className="w-12 h-12 mr-3 hidden md:block" />
-     <h1 className="text-2xl font-semibold my-4">Duas Page</h1>
-     </div>
-     <h1 className="text-2xl font-semibold my-4 header-title">Duas Page</h1>
+      <div className="flex items-center header-img">
+        <img src="/assets/icon/dua-logo.svg" alt="Icon" className="w-12 h-12 mr-3 hidden md:block" />
+        <h1 className="text-2xl font-semibold my-4">Duas Page</h1>
+      </div>
+      <h1 className="text-2xl font-semibold my-4 header-title">Duas Page</h1>
       <div className="flex items-center">
-        
-        <div className="relative  mr-16 hidden md:block">
+       
+        <div className="relative mr-16 hidden md:block">
           <input
             type="text"
             placeholder="Search By Dua Name"
@@ -51,12 +48,9 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, toggleSettings }) => {
           </span>
         </div>
 
-       
+    
         <div className="relative hidden md:block" ref={dropdownRef}>
-          <div
-            className="flex items-center cursor-pointer space-x-2"
-            onClick={toggleDropdown}
-          >
+          <div className="flex items-center cursor-pointer space-x-2" onClick={toggleDropdown}>
             <img
               src="/assets/icon/profile.svg"
               alt="User"
@@ -66,7 +60,6 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, toggleSettings }) => {
           </div>
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 bg-white border rounded-lg shadow-lg w-72">
-            
               <div className="absolute top-[-10px] right-9 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[10px] border-b-white "></div>
               <ul className="py-4 px-3 text-sm text-gray-700">
                 <li className="flex items-center px-4 py-2 hover:bg-gray-100 hover:rounded-lg cursor-pointer">
@@ -102,7 +95,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, toggleSettings }) => {
           )}
         </div>
 
-       
+    
         <button onClick={toggleSettings}>
           <FaCog size={20} className="text-[#31ab69] mx-4 setting-btn" />
         </button>

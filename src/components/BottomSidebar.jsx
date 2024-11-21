@@ -1,6 +1,6 @@
 import React from "react";
 
-const BottomSidebar: React.FC = () => {
+const BottomSidebar= () => {
   const navItems = [
     { image: "/assets/icon/home.svg", name: "Home" },
     { image: "/assets/icon/alldua.svg", name: "Categories" },

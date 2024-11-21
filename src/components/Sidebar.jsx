@@ -1,12 +1,9 @@
 import React from "react";
 import { FaHandHoldingHeart } from "react-icons/fa";
 
-interface SidebarProps {
-  isOpen: boolean;
-  toggleSidebar: () => void;
-}
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
+
+const Sidebar= ({ isOpen, toggleSidebar }) => {
   // Replace icons with image paths
   const menuItems = [
     { image: "/assets/icon/home.svg", name: "Dashboard" },

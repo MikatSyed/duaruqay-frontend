@@ -1,33 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useClickAway } from "react-use";
 
-interface SidebarProps {
-  categories: any[];
-  activeCategoryIndex: number | null;
-  setActiveCategoryIndex: React.Dispatch<React.SetStateAction<number | null>>;
-  handleCategoryClick: (
-    index: number,
-    categoryId: number,
-    categoryName: string
-  ) => Promise<void>;
-  handleSubcategoryClick: (
-    categoryId: number,
-    subcategoryId: number,
-    subcategoryName: string
-  ) => void;
-  handleSubSubcategoryClick: (
-    categoryId: number,
-    subcategoryId: number,
-    subSubcategoryId: number,
-    subSubcategoryName: string
-  ) => void;
-  searchTerm: string;
-  handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  isSidebarOpen: boolean;
-  closeSidebar: () => void;
-}
-
-const CategorySidebar: React.FC<SidebarProps> = ({
+const CategorySidebar = ({
   categories,
   activeCategoryIndex,
   setActiveCategoryIndex,
@@ -39,20 +13,18 @@ const CategorySidebar: React.FC<SidebarProps> = ({
   isSidebarOpen,
   closeSidebar,
 }) => {
-  const sidebarRef = useRef<HTMLDivElement>(null);
-  const [duas, setDuas] = useState<any[]>([]);
+  const sidebarRef = useRef(null);
+  const [duas, setDuas] = useState([]);
   const [loadingDuas, setLoadingDuas] = useState(false);
-  const [activeSubcategoryIndex, setActiveSubcategoryIndex] = useState<
-    number | null
-  >(null); // Active subcategory index
+  const [activeSubcategoryIndex, setActiveSubcategoryIndex] = useState(null);
 
   useClickAway(sidebarRef, closeSidebar);
 
-  const fetchDuas = async (categoryId: number, subcategoryId: number) => {
+  const fetchDuas = async (categoryId, subcategoryId) => {
     setLoadingDuas(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/v1/categories/subcategories/duas?cat=${categoryId}&subcat=${subcategoryId}`
+        `https://duaruqay-backend.onrender.com/api/v1/categories/subcategories/duas?cat=${categoryId}&subcat=${subcategoryId}`
       );
       const data = await response.json();
       if (data.success) {
@@ -67,21 +39,13 @@ const CategorySidebar: React.FC<SidebarProps> = ({
     setLoadingDuas(false);
   };
 
-  const handleCategoryItemClick = (
-    index: number,
-    categoryId: number,
-    categoryName: string
-  ) => {
+  const handleCategoryItemClick = (index, categoryId, categoryName) => {
     handleCategoryClick(index, categoryId, categoryName);
     window.history.pushState({}, "", `?cat=${categoryId}`);
     closeSidebar();
   };
 
-  const handleSubcategoryItemClick = (
-    categoryId: number,
-    subcategoryId: number,
-    subcategoryName: string
-  ) => {
+  const handleSubcategoryItemClick = (categoryId, subcategoryId, subcategoryName) => {
     handleSubcategoryClick(categoryId, subcategoryId, subcategoryName);
     window.history.pushState(
       {},
@@ -94,10 +58,10 @@ const CategorySidebar: React.FC<SidebarProps> = ({
   };
 
   const handleSubSubcategoryItemClick = (
-    categoryId: number,
-    subcategoryId: number,
-    subSubcategoryId: number,
-    subSubcategoryName: string
+    categoryId,
+    subcategoryId,
+    subSubcategoryId,
+    subSubcategoryName
   ) => {
     handleSubSubcategoryClick(
       categoryId,
@@ -149,7 +113,7 @@ const CategorySidebar: React.FC<SidebarProps> = ({
                     category.cat_id,
                     category.cat_name_en
                   )
-                } // Pass category name here
+                }
               >
                 <div className="py-3">
                   <div className="flex flex-row w-70 items-center xs:w-full sm:w-full md:w-full">
@@ -190,7 +154,7 @@ const CategorySidebar: React.FC<SidebarProps> = ({
                   <div className="flex flex-row items-start">
                     <ul className="list-none border-l-2 border-dotted border-[#1fa45b] ml-8 z-0">
                       {category.subcategories.map(
-                        (subcategory: any, subIndex: number) => (
+                        (subcategory, subIndex) => (
                           <li key={subcategory.subcat_id}>
                             <div
                               className={`flex items-center gap-x-2 cursor-pointer z-[10] py-2 ${
@@ -220,7 +184,7 @@ const CategorySidebar: React.FC<SidebarProps> = ({
                               !loadingDuas &&
                               duas.length > 0 && (
                                 <ul className="ml-4 text-gray-600 text-sm">
-                                  {duas.map((dua: any) => (
+                                  {duas.map((dua) => (
                                     <li
                                       key={dua.dua_id}
                                       className={`flex items-center cursor-pointer py-2`}

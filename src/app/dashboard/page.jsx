@@ -1,20 +1,20 @@
-"use client";
+"use client"; // Ensure this is client-side code
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import CategoryCard from "../../components/CategoryCard";
 import SettingsPanel from "../../components/SettingsPanel";
-import DuaCard from "@/components/DuaCard";
 import { useSearchParams } from "next/navigation";
-import BottomSidebar from "@/components/BottomSidebar";
+import BottomSidebar from "../../components/BottomSidebar";
+import DuaCard from "../../components/DuaCard";
 
-const Dashboard: React.FC = () => {
+const Dashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isSettingsOpen, setSettingsOpen] = useState(false);
 
   const searchParams = useSearchParams();
-  const categoryId = searchParams.get("cat") || "1";
+  const categoryId = searchParams.get("cat") || "1"; // Default to "1" if no category param
   const subCategoryId = searchParams.get("subcat");
   const duaId = searchParams.get("dua");
 
@@ -34,11 +34,11 @@ const Dashboard: React.FC = () => {
         />
 
         <div className="main mx-4">
-          <div className="category-card  flex-shrink-0  height overflow-y-auto custom-scrollbar rounded-lg">
+          <div className="category-card flex-shrink-0 height overflow-y-auto custom-scrollbar rounded-lg">
             <CategoryCard />
           </div>
 
-          <div className="dua-card flex-grow flex flex-col height  overflow-y-auto custom-scrollbar">
+          <div className="dua-card flex-grow flex flex-col height overflow-y-auto custom-scrollbar">
             <DuaCard
               categoryId={categoryId}
               subCategoryId={subCategoryId}
@@ -60,4 +60,11 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+// Wrap the entire dashboard in a Suspense boundary for the client-side rendering
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Dashboard />
+    </Suspense>
+  );
+}

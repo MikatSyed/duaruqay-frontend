@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { FaCog, FaFont, FaPaintBrush } from "react-icons/fa";
 import { TbLanguage } from "react-icons/tb";
 
-const Setting: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<string | null>("language");
+const Setting = () => {
+  const [activeSection, setActiveSection] = useState("language");
 
-  const handleSectionClick = (section: string) => {
+  const handleSectionClick = (section) => {
     setActiveSection(section);
   };
 
-  const isActive = (section: string) => activeSection === section;
+  const isActive = (section) => activeSection === section;
 
   return (
     <div className="fixed  setting-card bg-white md:w-[340px] rounded-3xl">

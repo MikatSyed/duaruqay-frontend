@@ -3,24 +3,21 @@ import { useClickAway } from "react-use";
 import { FaCog, FaFont, FaPaintBrush } from "react-icons/fa";
 import { TbLanguage } from "react-icons/tb";
 
-interface SettingsPanelProps {
-  isOpen: boolean;
-  toggleSettings: () => void;
-}
 
-const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, toggleSettings }) => {
-  const [activeSection, setActiveSection] = useState<string | null>("language");
-  const panelRef = useRef<HTMLDivElement>(null);
+
+const SettingsPanel = ({ isOpen, toggleSettings }) => {
+  const [activeSection, setActiveSection] = useState("language");
+  const panelRef = useRef(null);
 
   useClickAway(panelRef, () => {
     if (isOpen) toggleSettings(); // Close the sidebar when clicking outside
   });
 
-  const handleSectionClick = (section: string) => {
+  const handleSectionClick = (section) => {
     setActiveSection(section);
   };
 
-  const isActive = (section: string) => activeSection === section;
+  const isActive = (section) => activeSection === section;
 
   return (
     <>
