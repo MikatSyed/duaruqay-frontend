@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; 
+}
+.no-scrollbar {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -36,12 +46,44 @@
 
    
   }
+  .setting-btn{
+    display: none;
+  }
 }
 
+@media (min-width: 1400px) {
+  .category-card{
+    height: 850px;
+  }
+  .dua-card{
+    height: 850px;
+  }
+  .setting-card{
+    height: 850px;
+  }
+}
+@media (min-width: 1280px) and (max-width: 1400px) {
+  .category-card{
+    height: 520px;
+  }
+  .dua-card{
+    height: 520px;
+  }
+}
+@media (min-width: 1140px) and (max-width: 1279px) {
+  .category-card{
+    height: 730px;
+  }
+  .dua-card{
+    height: 730px;
+  }
+}
 @media (max-width: 1139px) {
   .categories-main{
-   display: none;
+   display: none !important ;
   }
+ 
+  
 }
 @media (min-width: 1139px) {
   .categories{
@@ -63,6 +105,7 @@
     background-color: white;
     margin-bottom: 30px;
   }
+ 
   
 }
 @media (min-width: 1280px) {
@@ -77,31 +120,31 @@
   }
 }
 
-/* Default layout (mobile-first, block layout for screens <= 1139px) */
+
 .main {
   display: block;
-  width: 100%;
+  width: auto;
 }
 
 .category-card, .dua-card {
-  margin-bottom: 20px; /* Adds space between cards */
+  margin-bottom: 20px; 
+
 }
 
-/* For screens larger than 1139px, use flex layout */
+
 @media (min-width: 1140px) {
   .main {
     display: flex;
-    flex-direction: row;  /* Arrange items side by side */
-    gap: 24px;  /* Add space between the cards */
+    flex-direction: row;  
+    gap: 24px;  
   }
   
-  .category-card {
-    flex-shrink: 0; /* Prevents category card from shrinking */
-  }
+ 
 
   .dua-card {
-    flex-grow: 1;  /* Makes Dua card take available space */
+    flex-grow: 1; 
   }
+
 }
 
 

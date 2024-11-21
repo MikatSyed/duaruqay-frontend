@@ -19,7 +19,7 @@ const Dashboard: React.FC = () => {
   const duaId = searchParams.get("dua");
 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="flex bg-gray-100 min-h-screen ">
       <div className="sidebar">
         <Sidebar
           isOpen={isSidebarOpen}
@@ -33,21 +33,19 @@ const Dashboard: React.FC = () => {
           toggleSettings={() => setSettingsOpen(!isSettingsOpen)}
         />
 
-<div className="main mx-4">
-  {/* Category Card */}
-  <div className="category-card flex-shrink-0 max-h-[750px] overflow-y-auto custom-scrollbar rounded-lg">
-    <CategoryCard />
-  </div>
+        <div className="main mx-4">
+          <div className="category-card  flex-shrink-0  height overflow-y-auto custom-scrollbar rounded-lg">
+            <CategoryCard />
+          </div>
 
-  {/* Dua Card */}
-  <div className="dua-card flex-grow flex flex-col max-h-[750px] overflow-y-auto custom-scrollbar">
-    <DuaCard
-      categoryId={categoryId}
-      subCategoryId={subCategoryId}
-      duaId={duaId}
-    />
-  </div>
-</div>
+          <div className="dua-card flex-grow flex flex-col height  overflow-y-auto custom-scrollbar">
+            <DuaCard
+              categoryId={categoryId}
+              subCategoryId={subCategoryId}
+              duaId={duaId}
+            />
+          </div>
+        </div>
 
         <div className="bottom-sidebar shadow-md">
           <BottomSidebar />

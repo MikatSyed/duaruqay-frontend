@@ -13,7 +13,7 @@ const Setting: React.FC = () => {
   const isActive = (section: string) => activeSection === section;
 
   return (
-    <div className="fixed   h-[550px] bg-white md:w-[340px] rounded-3xl">
+    <div className="fixed  setting-card bg-white md:w-[340px] rounded-3xl">
       <div className=" pb-6 xs:pt-0 sm:pt-0">
         <p className="text-center text-xl xs:hidden sm:hidden">Settings</p>
       </div>

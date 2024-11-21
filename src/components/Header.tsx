@@ -104,7 +104,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, toggleSettings }) => {
 
        
         <button onClick={toggleSettings}>
-          <FaCog size={20} className="text-[#31ab69] mx-4" />
+          <FaCog size={20} className="text-[#31ab69] mx-4 setting-btn" />
         </button>
       </div>
     </div>
