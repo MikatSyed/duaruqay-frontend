@@ -17,11 +17,11 @@ const Sidebar= ({ isOpen, toggleSidebar }) => {
 
   return (
     <div
-      className={` max-h-[900px] m-6 fixed top-0 left-0 h-full bg-white rounded-3xl text-white transition-transform ${
+      className={` sidebar-height m-6 fixed top-0 left-0 h-full bg-white rounded-3xl text-white transition-transform ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       } md:translate-x-0 w-64 md:w-[100px] overflow-y-auto  custom-scrollbar`}
     >
-      {/* Close Button for Mobile */}
+     
       <button className="p-4 text-gray-200 md:hidden" onClick={toggleSidebar}>
         ✕
       </button>
@@ -35,11 +35,11 @@ const Sidebar= ({ isOpen, toggleSidebar }) => {
     </div>
 
       <div className="flex flex-col items-center  md:p-4">
-        {/* Menu Items */}
+       
         {menuItems.map((item, index) => (
           <div
             key={index}
-            className="p-3 bg-gray-100 text-gray-400 rounded-full mt-4 flex items-center md:justify-center cursor-pointer"
+            className="p-[10px] bg-[#e8f0f5] text-gray-400 rounded-full mt-6 flex items-center md:justify-center cursor-pointer"
           >
           
             <img
@@ -52,8 +52,8 @@ const Sidebar= ({ isOpen, toggleSidebar }) => {
         ))}
       </div>
 
-      <div className="flex flex-col items-center md:px-4 md:py-14">
-      {/* Replace Image with Icon */}
+      <div className="flex flex-col items-center md:px-4 md:py-20">
+      
       <div className="bg-[#31ab69] text-white p-3 rounded-md ">
         <FaHandHoldingHeart size={22} />
       </div>

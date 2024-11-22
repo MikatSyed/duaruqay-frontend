@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import AudioPlayer from "./AudioPlayer";
-import Setting from "./Setting";
+
 import SkeletonDuaCard from "./SkeletonDuaCard";
+import Setting from "../Settings/Setting";
 
 const DuaCard = ({ categoryId, subCategoryId, duaId }) => {
   const [cardsData, setCardsData] = useState([]);
@@ -81,12 +82,7 @@ const DuaCard = ({ categoryId, subCategoryId, duaId }) => {
     }
   }, [subCategoryId, duaId, cardsData]);
 
-  const handleCopy = (card) => {
-    const content = `${card.dua_name_en}\n\n${card.dua_arabic}\n\nTransliteration: ${card.transliteration_en}\n\nTranslation: ${card.top_en}\n\nReference: ${card.refference_en}`;
-    navigator.clipboard.writeText(content);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+ 
 
   if (loading) {
     return <SkeletonDuaCard />;
@@ -139,34 +135,81 @@ const DuaCard = ({ categoryId, subCategoryId, duaId }) => {
               </div>
 
               <div className="flex items-center justify-between mt-5">
-                <AudioPlayer audioSrc={card.audio} />
+  <AudioPlayer audioSrc={card.audio} />
 
-                <div className="flex space-x-4">
-                  <button
-                    onClick={() => handleCopy(card)}
-                    className="p-2 text-white rounded-md"
-                    title={copied ? "Copied!" : "Copy"}
-                  >
-                    <img
-                      src={copied ? "/assets/icon/copy.svg" : "/assets/icon/copy.svg"}
-                      alt={copied ? "Copied" : "Copy"}
-                      className="h-6 w-6"
-                    />
-                  </button>
+  <div className="flex space-x-4">
+    <div className="group relative">
+      <button className="p-2 text-white rounded-md" title="Copy">
+        <img
+          src="/assets/icon/copy.svg"
+          alt="Copy"
+          className="h-auto max-w-[100%]"
+        />
+      </button>
+      {/* Tooltip */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-xs rounded py-1 px-2">
+        Copy
+      </div>
+    </div>
 
-                  <button className="p-2 text-white rounded-md" title="Bookmark">
-                    <img src="/assets/icon/bookmark.svg" alt="Bookmark" className="h-6 w-6" />
-                  </button>
+    <div className="group relative">
+      <button className="p-2 text-white rounded-md" title="Bookmark">
+        <img
+          src="/assets/icon/bookmark.svg"
+          alt="Bookmark"
+          className="h-auto max-w-[100%]"
+        />
+      </button>
+      {/* Tooltip */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-xs rounded py-1 px-2">
+        Bookmark
+      </div>
+    </div>
 
-                  <button className="p-2 text-white rounded-md" title="Share">
-                    <img src="/assets/icon/share.svg" alt="Share" className="h-6 w-6" />
-                  </button>
+    <div className="group relative">
+      <button className="p-2 text-white rounded-md" title="Plan">
+        <img
+          src="/assets/icon/plan.svg"
+          alt="Plan"
+          className="h-auto max-w-[100%]"
+        />
+      </button>
+      {/* Tooltip */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-xs rounded py-1 px-2">
+        Plan
+      </div>
+    </div>
 
-                  <button className="p-2 text-white rounded-md" title="Report">
-                    <img src="/assets/icon/report.svg" alt="Report" className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
+    <div className="group relative">
+      <button className="p-2 text-white rounded-md" title="Share">
+        <img
+          src="/assets/icon/share.svg"
+          alt="Share"
+          className="h-auto max-w-[100%]"
+        />
+      </button>
+    
+      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-xs rounded py-1 px-2">
+        Share
+      </div>
+    </div>
+
+    <div className="group relative">
+      <button className="p-2 text-white rounded-md" title="Report">
+        <img
+          src="/assets/icon/report.svg"
+          alt="Report"
+          className="h-auto max-w-[100%]"
+        />
+      </button>
+ 
+      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-xs rounded py-1 px-2">
+        Report
+      </div>
+    </div>
+  </div>
+</div>
+
             </div>
           </div>
         ))}

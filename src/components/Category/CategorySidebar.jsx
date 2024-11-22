@@ -88,17 +88,15 @@ const CategorySidebar = ({
 
       <div
         ref={sidebarRef}
-        className={`fixed top-0 left-0 h-full bg-white z-50 transition-all duration-300 ease-in-out transform ${
+        className={`fixed custom-scrollbar top-0 left-0 h-full bg-white z-50 transition-all duration-300 ease-in-out transform ${
           isSidebarOpen
             ? "translate-x-0 opacity-100"
             : "-translate-x-full opacity-0"
-        } w-[450px] overflow-y-auto`}
+        } w-[450px] overflow-y-auto custom-scrollbar`}
       >
-        <div className="bg-[#1fa45b] py-3 text-white text-center rounded-t-lg">
-          <h1 className="text-lg font-normal">Categories</h1>
-        </div>
+      
 
-        <div className="space-y-2 px-4 mt-6">
+        <div className="space-y-2 px-4 mt-8">
           {categories.map((category, index) => (
             <div key={category.cat_id}>
               <div

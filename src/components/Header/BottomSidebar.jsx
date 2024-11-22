@@ -6,7 +6,7 @@ const BottomSidebar= () => {
     { image: "/assets/icon/alldua.svg", name: "Categories" },
     { image: "/assets/icon/memorize.svg", name: "Memorize" },
     { image: "/assets/icon/bookmark.svg", name: "Bookmarks" },
-    { image: "/assets/icon/settings.svg", name: "Settings" },
+    { image: "/assets/icon/plan.svg", name: "Plan" },
   ];
 
   return (

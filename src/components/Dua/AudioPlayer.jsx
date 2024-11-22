@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const AudioPlayer = ({ audioSrc }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -7,7 +7,7 @@ const AudioPlayer = ({ audioSrc }) => {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
 
-  const extractAudioId = (src )  => {
+  const extractAudioId = (src) => {
     if (src) {
       const segments = src.split("/");
       const idSegment = segments[segments.length - 1];
@@ -33,8 +33,8 @@ const AudioPlayer = ({ audioSrc }) => {
 
       const updateTime = () => {
         if (audioElement && audioElement.duration) {
-          setCurrentTime(audioElement.currentTime);
-          setDuration(audioElement.duration);
+          setCurrentTime(Math.floor(audioElement.currentTime)); 
+          setDuration(Math.floor(audioElement.duration));
         }
       };
 
@@ -42,7 +42,7 @@ const AudioPlayer = ({ audioSrc }) => {
 
       audioElement.addEventListener("ended", () => {
         setIsPlaying(false);
-        setCurrentTime(audioElement.duration);
+        setCurrentTime(Math.floor(audioElement.duration));
       });
 
       return () => {
@@ -106,7 +106,7 @@ const AudioPlayer = ({ audioSrc }) => {
             src={`https://api.duaruqyah.com/duaaudiofinal/${parsedAudioId}.mp3`}
             onEnded={() => {
               setIsPlaying(false);
-              setCurrentTime(duration);
+              setCurrentTime(duration); // Ensure slider reaches the end
             }}
             onError={(e) => {
               console.error("Audio load error:", e.currentTarget.error);
@@ -133,13 +133,13 @@ const AudioPlayer = ({ audioSrc }) => {
         </>
       ) : (
         <input
-              type="range"
-              min="0"
-              max={duration}
-              value={currentTime}
-              className="w-full"
-              readOnly
-            />
+          type="range"
+          min="0"
+          max={duration}
+          value={currentTime}
+          className="w-full"
+          readOnly
+        />
       )}
     </div>
   );

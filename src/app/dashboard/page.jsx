@@ -1,20 +1,20 @@
-"use client"; // Ensure this is client-side code
+"use client"; 
 
 import React, { useState, Suspense } from "react";
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
-import CategoryCard from "../../components/CategoryCard";
-import SettingsPanel from "../../components/SettingsPanel";
+import Header from "../../components/Header/Header";
+import SettingsPanel from "../../components/Settings/SettingsPanel";
 import { useSearchParams } from "next/navigation";
-import BottomSidebar from "../../components/BottomSidebar";
-import DuaCard from "../../components/DuaCard";
+import BottomSidebar from "../../components/Header/BottomSidebar";
+import CategoryCard from "../../components/Category/CategoryCard";
+import DuaCard from "../../components/Dua/DuaCard";
+import Sidebar from "../../components/Header/Sidebar";
 
 const Dashboard = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isSettingsOpen, setSettingsOpen] = useState(false);
 
   const searchParams = useSearchParams();
-  const categoryId = searchParams.get("cat") || "1"; // Default to "1" if no category param
+  const categoryId = searchParams.get("cat") || "1"; 
   const subCategoryId = searchParams.get("subcat");
   const duaId = searchParams.get("dua");
 
@@ -34,7 +34,7 @@ const Dashboard = () => {
         />
 
         <div className="main mx-4">
-          <div className="category-card flex-shrink-0 height overflow-y-auto custom-scrollbar rounded-lg">
+          <div className="category-card flex-shrink-0 height  rounded-lg">
             <CategoryCard />
           </div>
 
@@ -60,7 +60,7 @@ const Dashboard = () => {
   );
 };
 
-// Wrap the entire dashboard in a Suspense boundary for the client-side rendering
+
 export default function DashboardPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>

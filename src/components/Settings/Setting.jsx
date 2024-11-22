@@ -1,17 +1,10 @@
-import React, { useRef, useState } from "react";
-import { useClickAway } from "react-use";
+"use client";
+import React, { useState } from "react";
 import { FaCog, FaFont, FaPaintBrush } from "react-icons/fa";
 import { TbLanguage } from "react-icons/tb";
 
-
-
-const SettingsPanel = ({ isOpen, toggleSettings }) => {
+const Setting = () => {
   const [activeSection, setActiveSection] = useState("language");
-  const panelRef = useRef(null);
-
-  useClickAway(panelRef, () => {
-    if (isOpen) toggleSettings(); // Close the sidebar when clicking outside
-  });
 
   const handleSectionClick = (section) => {
     setActiveSection(section);
@@ -20,35 +13,21 @@ const SettingsPanel = ({ isOpen, toggleSettings }) => {
   const isActive = (section) => activeSection === section;
 
   return (
-    <>
-   
-      <div
-        className={`fixed inset-0 bg-black transition-opacity duration-300 ${
-          isOpen ? "opacity-50 visible" : "opacity-0 invisible"
-        }`}
-        onClick={toggleSettings}
-      ></div>
-
-      <div
-        className={`fixed top-0 right-0 h-full bg-white z-50 shadow-lg transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        } w-full md:w-[340px] rounded-3xl xs:rounded-3xl sm:h-fit md:h-screen lg:h-screen xl:h-screen`}
-        ref={panelRef}
-      >
-        <div className="pt-9 pb-6 xs:pt-0 sm:pt-0">
-          <p className="text-center text-xl xs:hidden sm:hidden">Settings</p>
+    <div className="fixed  setting-card bg-white md:w-[340px] rounded-3xl">
+     <div className="pt-9 py-6 ">
+          <p className="text-center text-2xl font-md">Settings</p>
         </div>
         <div className="xs:pb-4 sm:pb-4 w-full">
           {/* Language Settings */}
           <div className="mx-4 my-4" onClick={() => handleSectionClick("language")}>
             <div
-              className={`border rounded-lg ${
+              className={` rounded-lg ${
                 isActive("language") ? "border-l-4 border-[#31ab69]" : "border-transparent"
               }`}
             >
               <div
                 className={`flex flex-row w-full rounded-lg ${
-                  isActive("language") ? "bg-green-50" : "bg-gray-100"
+                  isActive("language") ? "bg-gray-100" : "bg-gray-100"
                 }`}
               >
                 <div className="p-2 flex flex-row items-center w-full">
@@ -75,16 +54,16 @@ const SettingsPanel = ({ isOpen, toggleSettings }) => {
             </div>
           </div>
 
-          {/* General Settings */}
+         
           <div className="mx-4 my-4" onClick={() => handleSectionClick("general")}>
             <div
-              className={`border rounded-lg ${
+              className={` rounded-lg ${
                 isActive("general") ? "border-l-4 border-[#31ab69]" : "border-transparent"
               }`}
             >
               <div
                 className={`flex flex-row w-full rounded-lg ${
-                  isActive("general") ? "bg-green-50" : "bg-gray-100"
+                  isActive("general") ? "bg-gray-100" : "bg-gray-100"
                 }`}
               >
                 <div className="p-2 flex flex-row items-center w-full">
@@ -114,13 +93,13 @@ const SettingsPanel = ({ isOpen, toggleSettings }) => {
           {/* Font Settings */}
           <div className="mx-4 my-4" onClick={() => handleSectionClick("font")}>
             <div
-              className={`border rounded-lg ${
+              className={` rounded-lg ${
                 isActive("font") ? "border-l-4 border-[#31ab69]" : "border-transparent"
               }`}
             >
               <div
                 className={`flex flex-row w-full rounded-lg ${
-                  isActive("font") ? "bg-green-50" : "bg-gray-100"
+                  isActive("font") ? "bg-gray-100" : "bg-gray-100"
                 }`}
               >
                 <div className="p-2 flex flex-row items-center w-full">
@@ -150,13 +129,13 @@ const SettingsPanel = ({ isOpen, toggleSettings }) => {
           {/* Appearance Settings */}
           <div className="mx-4 my-4" onClick={() => handleSectionClick("appearance")}>
             <div
-              className={`border rounded-lg ${
+              className={` rounded-lg ${
                 isActive("appearance") ? "border-l-4 border-[#31ab69]" : "border-transparent"
               }`}
             >
               <div
                 className={`flex flex-row w-full rounded-lg ${
-                  isActive("appearance") ? "bg-green-50" : "bg-gray-100"
+                  isActive("appearance") ? "bg-gray-100" : "bg-gray-100"
                 }`}
               >
                 <div className="p-2 flex flex-row items-center w-full">
@@ -183,9 +162,8 @@ const SettingsPanel = ({ isOpen, toggleSettings }) => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+    </div>
   );
 };
 
-export default SettingsPanel;
+export default Setting;

@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Cairo:wght@400;700&family=Amiri&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 
 .no-scrollbar::-webkit-scrollbar {
@@ -61,13 +63,26 @@
   .setting-card{
     height: 850px;
   }
+  .sidebar-height{
+    height: 920px;
+  }
+  .category-content{
+    height: 715px;
+  }
 }
 @media (min-width: 1280px) and (max-width: 1400px) {
   .category-card{
     height: 520px;
   }
+ 
   .dua-card{
     height: 520px;
+  }
+  .sidebar-height{
+    height: 590px;
+  }
+  .category-content{
+    height: 385px;
   }
 }
 @media (min-width: 1140px) and (max-width: 1279px) {
@@ -76,6 +91,9 @@
   }
   .dua-card{
     height: 730px;
+  }
+  .category-content{
+    height: 595px;
   }
 }
 @media (max-width: 1139px) {
